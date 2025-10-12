@@ -23,3 +23,19 @@ pip install matplotlib tqdm
 MNIST & CIFAR-10 will auto-download into ./data by default.
 
 You can change the data path by editing the ROOT variable in the scripts (e.g., r"D:\datasets\cifar10").
+
+💡 Technical Notes
+
+Normalize
+
+MNIST (1 channel): Normalize((0.1307,), (0.3081,))
+
+CIFAR-10 (RGB): Normalize((0.4914,0.4822,0.4465), (0.2470,0.2435,0.2616))
+
+Train/Eval modes: use model.train() during training; model.eval() + torch.no_grad() for evaluation.
+
+Weight Decay (AdamW): regularization to reduce overfitting; typically exclude bias and (Batch/Layer)Norm from decay.
+
+📜 License
+
+MIT
