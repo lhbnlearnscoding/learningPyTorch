@@ -3,7 +3,7 @@ from torch.utils.data import random_split, DataLoader
 from torchvision import datasets, transforms
 
 device = torch.device("cuda" if torch.cuda.is_available() else "cpu")
-torch.manual_seed(0)
+torch.manual_seed(0) # for reproducibility
 
 # 1) Data
 tfm = transforms.Compose([
@@ -30,14 +30,14 @@ class MLP(nn.Module):
         )
     def forward(self, x): return self.net(x)
 
-model = MLP().to(device)
-criterion = nn.CrossEntropyLoss()
+model = MLP().to(device) # chuyển model lên GPU nếu có
+criterion = nn.CrossEntropyLoss() # loss function
 optimizer = optim.AdamW(model.parameters(), lr=1e-3, weight_decay=1e-2)
-scheduler = optim.lr_scheduler.CosineAnnealingLR(optimizer, T_max=10)
+scheduler = optim.lr_scheduler.CosineAnnealingLR(optimizer, T_max=10) 
 
 def eval_loader(loader):
     model.eval(); correct=total=loss_sum=0.0
-    with torch.no_grad():
+    with torch.no_grad(): # không tính gradient với no_grad
         for xb, yb in loader:
             xb, yb = xb.to(device), yb.to(device)
             logits = model(xb)
